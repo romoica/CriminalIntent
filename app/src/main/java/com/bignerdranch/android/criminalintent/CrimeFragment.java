@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
 
 
 /**
@@ -31,7 +33,9 @@ public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
+
+    private EditText mTitleField;
 
     /**
      * Use this factory method to create a new instance of
@@ -68,21 +72,40 @@ public class CrimeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crime, container, false);
+        View v = inflater.inflate(R.layout.fragment_crime, container, false);
+        mTitleField = (EditText)v.findViewById(R.id.crime_title);
+        mTitleField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                mCrime.setTitle(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // This space intentionally left blank
+            }
+        });
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        //if (mListener != null) {
+        //    mListener.onFragmentInteraction(uri);
+        //}
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+           // mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -92,7 +115,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        //mListener = null;
     }
 
     /**
