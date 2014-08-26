@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 
-
-public class CrimeActivity extends Activity {
+/**
+ * Created by RoM on 26.08.2014.
+ */
+public abstract class SingleFragmentActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +18,10 @@ public class CrimeActivity extends Activity {
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
         if (fragment == null) {
-            fragment = new CrimeFragment();
-            fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
+            fragment = createFragment();
         }
+        fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
     }
 
-
+    protected abstract Fragment createFragment();
 }
